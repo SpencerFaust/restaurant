@@ -2,30 +2,15 @@ const express = require('express');
 let app = express();
 const bodyParser = require('body-parser');
 const PORT = 5000;
-const pg = require('pg');
+const pool = require('./modules/pool');
 
-const pool = pg.Pool({
-    host: 'localhost',
-    port: 5432,
-    database: 'restaurant',
-    max: 10,
-    idleTimeoutMillis: 30000
-});
-
-pool.on('connect', () => {
-    console.log('PostgreSQL Initialized');
-});
-
-pool.on('error', (error) => {
-    console.log('PostgreSQL error:', error); 
-});
 
 app.use(express.static('server/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/restaurant', (req, res) => {
     console.log('/restaurant GET received');
-    pool.query(`SELECT * FROM "restaurant"`).then((response) => {
+    pool.query(`SELECT * FROM "restaurants"`).then((response) => {
         console.log('Response from DB:', response);
         res.send(response.rows);
     }).catch((error) => {
@@ -35,7 +20,7 @@ app.get('/restaurant', (req, res) => {
 
 app.post('/restaurant', (req, res) => {
     console.log('/restaurant POST received');
-    pool.query(`INSERT INTO "restaurant" (name, type) VALUES ($1, $2);`, [req.body.name, req.body.type])
+    pool.query(`INSERT INTO "restaurants" (name, type) VALUES ($1, $2);`, [req.body.name, req.body.type])
     .then(() => {
         res.sendStatus(201);
     }).catch((error) => {

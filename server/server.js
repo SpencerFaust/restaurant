@@ -8,7 +8,8 @@ const restaurantRouter = require('./routes/restaurant.router');
 
 app.use(express.static('server/public'));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use('/', restaurantRouter);
+
+app.use('/restaurant', restaurantRouter);
 
 app.listen(PORT, () => {
     console.log('Listening on port', PORT);

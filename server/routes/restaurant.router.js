@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
 
-router.get('/restaurant', (req, res) => {
+router.get('/', (req, res) => {
     console.log('/restaurant GET received');
     pool.query(`SELECT * FROM "restaurants"`).then((response) => {
         console.log('Response from DB:', response);
@@ -12,7 +12,7 @@ router.get('/restaurant', (req, res) => {
     });
 });
 
-router.post('/restaurant', (req, res) => {
+router.post('/', (req, res) => {
     console.log('/restaurant POST received');
     pool.query(`INSERT INTO "restaurants" (name, type) VALUES ($1, $2);`, [req.body.name, req.body.type])
     .then(() => {

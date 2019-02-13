@@ -17,13 +17,13 @@ function onReady() {
 };
 
 function deleteItem() {
+    console.log($(this).data().id);
     $.ajax({
-        url: '/restaurant',
-        method: 'DELETE',
-
+        url: '/restaurant/' + $(this).data().id,
+        method: 'DELETE'
     }).then( function () {
         loadTable();
-    })
+    });
 };
 
 function loadTable() {
@@ -37,7 +37,7 @@ function loadTable() {
             <tr>
                 <td>${food.name}</td>
                 <td>${food.type}</td>
-                <td><button class="deleteButton">X</button></td>
+                <td><button class="deleteButton" data-id="${food.id}">X</button></td>
             </tr>
         `)});
     });

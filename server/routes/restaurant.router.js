@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 
 router.get('/', (req, res) => {
     console.log('/restaurant GET received');
-    pool.query(`SELECT * FROM "restaurants"`).then((response) => {
+    pool.query(`SELECT * FROM "restaurants" ORDER BY "id";`).then((response) => {
         console.log('Response from DB:', response);
         res.send(response.rows);
     }).catch((error) => {
@@ -26,6 +26,17 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res) => {
     console.log('/restaurant DELETE received');
     pool.query(`DELETE FROM "restaurants" WHERE "id" = $1;`, [req.params.id])
+    .then(() => {
+        res.sendStatus(204);
+    }).catch((error) => {
+        console.log('/restaurant DELETE error:', error);
+        res.sendStatus(500);
+    });
+});
+
+router.put('/:id', (req, res) => {
+    console.log('/restaurant PUT received');
+    pool.query(`UPDATE "restaurants" SET "rating" = '5' WHERE "id" = $1;`, [req.params.id])
     .then(() => {
         res.sendStatus(204);
     }).catch((error) => {

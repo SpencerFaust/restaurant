@@ -19,7 +19,12 @@ function onReady() {
 };
 
 function saveItem() {
-    console.log('Save button initialized');
+    $.ajax({
+        url: '/restaurant/' + $(this).data().id,
+        method: 'PUT'
+    }).then( function () {
+        loadTable();
+    });
 };
 
 function deleteItem() {

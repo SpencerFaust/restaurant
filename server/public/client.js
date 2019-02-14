@@ -21,8 +21,12 @@ function onReady() {
 function saveItem() {
     $.ajax({
         url: '/restaurant/' + $(this).data().id,
-        method: 'PUT'
+        method: 'PUT',
+        data: {
+            rating: $(this).parent().prev().children().val()
+        }
     }).then( function () {
+        $('#inputRating').val('');
         loadTable();
     });
 };
@@ -48,7 +52,7 @@ function loadTable() {
             <tr>
                 <td>${food.name}</td>
                 <td>${food.type}</td>
-                <td>${food.rating}</td>
+                <td><input value="${food.rating}" /></td>
                 <td><button class="saveButton" data-id="${food.id}">Save</button></td>
                 <td><button class="deleteButton" data-id="${food.id}">X</button></td>
             </tr>

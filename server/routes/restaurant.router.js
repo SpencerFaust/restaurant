@@ -36,7 +36,7 @@ router.delete('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
     console.log('/restaurant PUT received');
-    pool.query(`UPDATE "restaurants" SET "rating" = '5' WHERE "id" = $1;`, [req.params.id])
+    pool.query(`UPDATE "restaurants" SET "rating" = $1 WHERE "id" = $2;`, [req.body.rating, req.params.id])
     .then(() => {
         res.sendStatus(204);
     }).catch((error) => {

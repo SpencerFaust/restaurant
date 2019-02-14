@@ -14,7 +14,12 @@ function onReady() {
     console.log('JQuery.js Initialized');
     $('#submitNameTypeButton').on('click', newFood);
     $('table').on('click', '.deleteButton', deleteItem);
+    $('table').on('click', '.saveButton', saveItem);
     loadTable();
+};
+
+function saveItem() {
+    console.log('Save button initialized');
 };
 
 function deleteItem() {
@@ -39,6 +44,7 @@ function loadTable() {
                 <td>${food.name}</td>
                 <td>${food.type}</td>
                 <td>${food.rating}</td>
+                <td><button class="saveButton" data-id="${food.id}">Save</button></td>
                 <td><button class="deleteButton" data-id="${food.id}">X</button></td>
             </tr>
         `)});

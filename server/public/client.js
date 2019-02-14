@@ -3,9 +3,10 @@ console.log('client.js Initialized');
 $(document).ready(onReady);
 
 class Food {
-    constructor(name, type) {
+    constructor(name, type, rating) {
         this.name = name,
-        this.type = type
+        this.type = type,
+        this.rating = rating
     }
 };
 
@@ -37,6 +38,7 @@ function loadTable() {
             <tr>
                 <td>${food.name}</td>
                 <td>${food.type}</td>
+                <td>${food.rating}</td>
                 <td><button class="deleteButton" data-id="${food.id}">X</button></td>
             </tr>
         `)});
@@ -44,7 +46,7 @@ function loadTable() {
 };
 
 function newFood() {
-    let thisNewFood = new Food($('#inputName').val(), $('#inputType').val());
+    let thisNewFood = new Food($('#inputName').val(), $('#inputType').val(), $('#inputRating').val());
     $.ajax({
         url: '/restaurant',
         method: 'POST',
